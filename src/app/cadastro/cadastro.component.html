@@ -1,0 +1,22 @@
+<h2>Cadastro de Contatos</h2>
+
+<div>
+  <label for="nome">Nome: &nbsp;&nbsp;&nbsp;   </label>
+  <input id="nome" type="text" pInputText [(ngModel)]="nome" />
+
+  <br /><br />
+
+  <label for="telefone">Telefone: </label>
+  <input id="telefone" type="text" pInputText [(ngModel)]="telefone" />
+
+  <br /><br />
+
+  <!-- Botões alinhados lado a lado -->
+  <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+    <p-button [label]="labelNovoContato" icon="pi pi-save" (click)="novoContato()"></p-button>
+    <p-button label="Home" icon="pi pi-home" [routerLink]="['/home']" severity="secondary"></p-button>
+  </div>
+
+  <br /><br />
+  <p *ngIf="nome">Digitando: {{ nome }}</p>
+</div>

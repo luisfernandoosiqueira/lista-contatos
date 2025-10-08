@@ -1,0 +1,35 @@
+<h2>Lista de Contatos</h2>
+
+
+<!-- Ações -->
+<div style="margin: 12px 0; display: flex; gap: 12px; flex-wrap: wrap;">
+    <p-button label="Novo Contato" icon="pi pi-user-plus" [routerLink]="['/cadastro']" size="large">
+    </p-button>
+
+    <p-button label="Home" icon="pi pi-home" [routerLink]="['/home']" size="large" severity="secondary">
+    </p-button>
+</div>
+
+<!-- Tabela -->
+<p-table *ngIf="contatos.length > 0; else vazio" [value]="contatos" [tableStyle]="{ 'min-width': '36rem' }"
+    styleClass="p-datatable-sm">
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="width: 6rem;">ID</th>
+            <th>Nome</th>
+            <th>Telefone</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-c>
+        <tr>
+            <td>{{ c.id }}</td>
+            <td>{{ c.nome }}</td>
+            <td>{{ c.telefone }}</td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<!-- Estado vazio -->
+<ng-template #vazio>
+    <p style="margin-top: 12px;">Nenhum contato cadastrado ainda.</p>
+</ng-template>
