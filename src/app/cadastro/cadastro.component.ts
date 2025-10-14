@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';     
 import { FormsModule } from '@angular/forms';        
 import { InputTextModule } from 'primeng/inputtext'; 
@@ -9,7 +9,7 @@ import { ContatoService, Contato } from '../service/contatos.service';
 @Component({
   selector: 'app-cadastro',
   standalone: true,
-  imports: [RouterLink, CommonModule, FormsModule, InputTextModule, ButtonModule],
+  imports: [CommonModule, FormsModule, InputTextModule, ButtonModule],
   templateUrl: './cadastro.component.html',
   styleUrls: ['./cadastro.component.scss']
 })
@@ -18,7 +18,7 @@ export class CadastroComponent {
   nome: string = '';
   telefone: string = '';
 
-  constructor(public contatoService: ContatoService) {}
+  constructor(public contatoService: ContatoService, private router: Router) {}
 
 novoContato(): void {
   if (!this.nome.trim() || !this.telefone.trim()) {
@@ -27,6 +27,7 @@ novoContato(): void {
   }
 
   const contato: Contato = { nome: this.nome, telefone: this.telefone };
+
   this.contatoService.add(contato);
 
   alert(`Contato salvo com sucesso:
@@ -36,6 +37,9 @@ Telefone: ${this.telefone}`);
   // limpar campos
   this.nome = '';
   this.telefone = '';
+
+this.router.navigate(['/listagem']);
+
 }
 
 }

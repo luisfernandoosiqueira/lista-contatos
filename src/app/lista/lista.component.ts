@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { ContatoService, Contato } from '../service/contatos.service';
@@ -12,10 +12,17 @@ import { ContatoService, Contato } from '../service/contatos.service';
   templateUrl: './lista.component.html',
   styleUrls: ['./lista.component.scss'],
 })
-export class ListaComponent {
-  constructor(public contatoService: ContatoService) {}
+export class ListaComponent implements OnInit {
+  contatos: Contato[] = [];
 
-  get contatos(): Contato[] {
-    return this.contatoService.findAll();
+  constructor(public contatoService: ContatoService, private router: Router) {}
+
+  ngOnInit(): void {
+    this.contatos = this.contatoService.findAll();
+  }
+
+  visualizar(id: number): void {
+    this.router.navigate(['contatodetails', id]);
+    // ou: this.router.navigate(['visualizar', id]);
   }
 }
