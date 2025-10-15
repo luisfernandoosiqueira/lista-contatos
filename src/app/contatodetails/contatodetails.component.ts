@@ -3,7 +3,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
-import { ContatoService, Contato } from '../service/contatos.service';
+import { NovoContatoService, Contato } from '../service/novo-contato.service';
 
 @Component({
   selector: 'app-contatodetails',
@@ -13,14 +13,22 @@ import { ContatoService, Contato } from '../service/contatos.service';
   styleUrls: ['./contatodetails.component.scss']
 })
 export class ContatodetailsComponent implements OnInit {
+  
   contato?: Contato;
 
-  constructor(private route: ActivatedRoute, private contatoService: ContatoService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private contatoApi: NovoContatoService
+  ) {}
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
+    
     if (!Number.isNaN(id)) {
-      this.contato = this.contatoService.findAll().find(c => c.id === id);
+      this.contatoApi.findById(id).subscribe({
+        next: (contatoBanco) => (this.contato = contatoBanco),
+        error: (err) => console.error('Erro ao buscar contato:', err)
+      });
     }
   }
 }
